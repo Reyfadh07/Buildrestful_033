@@ -45,7 +45,7 @@ public class ProductServiceController {
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ResponseEntity<Object> createProduct(@RequestBody Product product) {
         //jika ada id yang dimasukkan sama maka akan menampilkan warning atau pemeberitahuan bahwa id yang dimasukkan sudah ada
-        if(!productRepo.containsKey(product.getId()))
+        if(productRepo.containsKey(product.getId()))
                 {
                     return new ResponseEntity<>("Product already exist", HttpStatus.CONFLICT);
                 }
