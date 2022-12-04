@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import model.Product;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,10 +58,19 @@ public class ProductServiceController {
     //mengedit produk yang sudah ada
     @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateProduct(@PathVariable("id") String id, @RequestBody Product product){  
-        productRepo.remove(id);
-        product.setId(id);
-        productRepo.put(id, product);
-        return new ResponseEntity<>("Product is update successsfully", HttpStatus.OK);
+        //jika id yang dimasukkan tidak ada dalam daftar produk
+        if(!productRepo.containsKey(id))
+                {
+                    return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+                }
+        else 
+        {
+            productRepo.remove(id);
+            product.setId(id);
+            productRepo.put(id, product);
+            return new ResponseEntity<>("Product is update successsfully", HttpStatus.OK);
+        }
+        
     }
     
     //menampilkan produk
@@ -71,8 +79,6 @@ public class ProductServiceController {
         
         return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);
     }
-    
-    
     
         
 }
