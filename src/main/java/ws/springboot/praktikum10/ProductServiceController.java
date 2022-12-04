@@ -44,8 +44,16 @@ public class ProductServiceController {
     //menambahkan produk melalui postman
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ResponseEntity<Object> createProduct(@RequestBody Product product) {
-        productRepo.put(product.getId(), product);
-        return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
+        //jika ada id yang dimasukkan sama maka akan menampilkan warning atau pemeberitahuan bahwa id yang dimasukkan sudah ada
+        if(!productRepo.containsKey(product.getId()))
+                {
+                    return new ResponseEntity<>("Product already exist", HttpStatus.CONFLICT);
+                }
+        else 
+        {
+            productRepo.put(product.getId(), product);
+            return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
+        }
     }
     
     //menghapus produk
