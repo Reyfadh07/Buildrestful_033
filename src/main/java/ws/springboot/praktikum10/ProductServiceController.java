@@ -32,12 +32,20 @@ public class ProductServiceController {
         Product honey = new Product();
         honey.setId("1");
         honey.setName("Honey");
+        honey.setPrice(45000.00);
+        honey.setDiskon(5);
+         honey.setTotal(honey.getPrice(),honey.getDiskon());
         productRepo.put(honey.getId(), honey);
         
         Product almond = new Product();
         almond.setId("2");
         almond.setName("Almond");
+        almond.setPrice(150000.00);
+        almond.setDiskon(20);
+        almond.setTotal(almond.getPrice(),almond.getDiskon());
         productRepo.put(almond.getId(), almond);
+        
+        
         
     }
     
@@ -51,6 +59,7 @@ public class ProductServiceController {
                 }
         else 
         {
+            product.setTotal(product.getPrice(), product.getDiskon());
             productRepo.put(product.getId(), product);
             return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
         }
@@ -84,6 +93,7 @@ public class ProductServiceController {
         {
             productRepo.remove(id);
             product.setId(id);
+            product.setTotal(product.getPrice(), product.getDiskon());
             productRepo.put(id, product);
             return new ResponseEntity<>("Product is update successsfully", HttpStatus.OK);
         }
