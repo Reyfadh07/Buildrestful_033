@@ -34,7 +34,7 @@ public class ProductServiceController {
         honey.setName("Honey");
         honey.setPrice(45000.00);
         honey.setDiskon(5);
-         honey.setTotal(honey.getPrice(),honey.getDiskon());
+        honey.setTotal(honey.getPrice()-(honey.getPrice()*honey.getDiskon())/100);
         productRepo.put(honey.getId(), honey);
         
         Product almond = new Product();
@@ -42,7 +42,7 @@ public class ProductServiceController {
         almond.setName("Almond");
         almond.setPrice(150000.00);
         almond.setDiskon(20);
-        almond.setTotal(almond.getPrice(),almond.getDiskon());
+        almond.setTotal(honey.getPrice()-(honey.getPrice()*honey.getDiskon())/100);
         productRepo.put(almond.getId(), almond);
         
         
@@ -59,7 +59,7 @@ public class ProductServiceController {
                 }
         else 
         {
-            product.setTotal(product.getPrice(), product.getDiskon());
+            product.setTotal(product.getPrice()-(product.getPrice()*product.getDiskon())/100);
             productRepo.put(product.getId(), product);
             return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
         }
@@ -93,7 +93,7 @@ public class ProductServiceController {
         {
             productRepo.remove(id);
             product.setId(id);
-            product.setTotal(product.getPrice(), product.getDiskon());
+            product.setTotal(product.getPrice()-(product.getPrice()*product.getDiskon())/100);
             productRepo.put(id, product);
             return new ResponseEntity<>("Product is update successsfully", HttpStatus.OK);
         }
